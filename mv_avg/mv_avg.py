@@ -30,13 +30,13 @@ outputSignal = open("output.wav", mode = "wb")                  #open output sig
 headerChunks = inputSignal.read(44)     #read header chunk from input signal (first 44 bytes)
 outputSignal.write(headerChunks)        #copy header chunk to output signal (for wav formatting)
 
-nChan = struct.unpack("<H", headerChunks[22:24])[0] #read # of channels as uShort (LE)
-sFreq = struct.unpack("<L", headerChunks[24:28])[0] #read sampling frequency as uLong (LE)
-bps   = struct.unpack("<H", headerChunks[34:36])[0] #read bits per sample as uShort (LE)
-BRate = struct.unpack("<L", headerChunks[28:32])[0] #read byte rate (Bps) as uLong (LE)
-                                                    #calculated as (nChan * sFreq * bps)/8
+nChan = struct.unpack("<H", headerChunks[22:24])[0]     #read # of channels as uShort (LE)
+sFreq = struct.unpack("<L", headerChunks[24:28])[0]     #read sampling frequency as uLong (LE)
+bps   = struct.unpack("<H", headerChunks[34:36])[0]     #read bits per sample as uShort (LE)
+BRate = struct.unpack("<L", headerChunks[28:32])[0]     #read byte rate (Bps) as uLong (LE)
+                                                            #calculated as (nChan * sFreq * bps)/8
 dataSize = struct.unpack("<L", headerChunks[40:44])[0]  #total size of sample data in bytes (LE)
-                                                        #calculated as (nSamp * nChan * bps)/8
+                                                            #calculated as (nSamp * nChan * bps)/8
 print("")
 print("------------------")
 print("channels: %s | sFreq: %s samples/sec | depth: %s bits | Bps: %s bytes/sec" % (nChan, sFreq, bps, BRate))
@@ -62,6 +62,7 @@ for n in range(22, (dataSize - 22)):#for n = [22, datasize - 23] - loop thru inp
         outputSample += inputWave[n + m]    #accumulate input samples
     outputSample /= 45                  #average input samples (factored impulse response)
     outputSample = int(outputSample)    #convert average to int to compute output sample
+    
     outputByte = bytearray(1)           #create new bytearray object of size 1
     outputByte[0] = outputSample        #write output sample to bytearray
     outputSignal.write(outputByte)      #write byte to file
@@ -69,6 +70,5 @@ for n in range(22, (dataSize - 22)):#for n = [22, datasize - 23] - loop thru inp
 for finishOut in range(0, 22):      #finishOut = [0, 21] - loop 22 times (full immersion)
     outputSignal.write(bytes(1))        #write null bytes object of size 1 to file
     
-
 outputSignal.close()                #close output file
 inputSignal.close()                 #close input file
