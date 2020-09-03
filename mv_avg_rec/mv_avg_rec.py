@@ -1,9 +1,9 @@
 #---------------------------------------------
-#moving average filter
+#recursive moving average filter
 #by ramona a •w•          
-#7-25-20                  implements a moving average filter using recursion, requiring only
+#9-2-20                   implements a moving average filter using recursion, requiring only
 #                         2 additions per sample (as opposed to M additions for pure convolution)
-#                         frequency response is a sinc function H[f] = sin(πfM)/Msin(πf), with f | [0, .5]
+#                         frequency response is H[f] = sin(πfM)/Msin(πf), with f | [0, .5]
 #><>|^*^|<><              ----------------------------------------------------------------------------------     
 #_______                  • input signal    inputWave[n]:       (dataSize) samples    
 #--___--                  • filter kernel   h[m]                45 samples (M) (centered)
