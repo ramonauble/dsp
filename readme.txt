@@ -12,19 +12,19 @@ _______                              ←-\\π+r+π//-→
 ---------------------------------------------------
               DSP tests & studies
 ---------------------------------------------------
+---------------------------------------------------
 
-• mv_avg - 45 point moving average filter using convolution
+• mv_avg - moving average filter by convolution
   • this program takes a mono 8bit wav file of arbitary length as input
-  • uses output side convolution to implement a moving average filter
-    with a 45 point impulse response
+  • the output samples are calculated by convolving the input signal
+    with a 45 point impulse response equal to 1/45 at all points
   • applies the algorithm to the entire input waveform, storing the filtered
     output as a new wav file in the same directory
-  • reads/writes the wav file directly (does not use Lib/wave.py module)
   
-• mv_avg_rec - 45 point moving average filter using recursion
+• mv_avg_rec - moving average filter by recursive convolution
   • this program takes a mono 8bit wav file of arbitary length as input
-  • uses recursive convolution to calculate output samples from prior outputs
-    eliminating the need for M - 2 additions every output sample
+  • by recursion, the output samples are calculated from prior outputs,
+    averting the need for M - 2 additions every output sample
+    ♪ still requires one multiplication
   • applies the algorithm to the entire input waveform, storing the filtered
     output as a new wav file in the same directory
-  • reads/writes the wav file directly
